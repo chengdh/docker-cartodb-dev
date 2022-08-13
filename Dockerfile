@@ -183,7 +183,7 @@ RUN git clone -c submodule."private".update=none --recursive https://github.com/
     PGUSER=postgres make install && \
     service postgresql start && /bin/su postgres -c \
       /tmp/cartodb_pgsql.sh && service postgresql stop
-RUN cd - && \
+RUN cd /cartodb && \
     npm install && \
     rm -r /tmp/npm-* /root/.npm 
 
@@ -203,7 +203,9 @@ RUN cd /cartodb && \
 
 RUN cd /cartodb && \
     cp config/grunt_development.json ./config/grunt_true.json && \
-    /bin/bash -l -c 'bundle exec grunt'
+    export PATH=$PATH:$PWD/node_modules/grunt-cli/bin && \
+    bundle exec grunt --environment=development
+    # /bin/bash -l -c 'bundle exec grunt'
     # && \
     #rm -rf .git /root/.cache/pip node_modules
 
