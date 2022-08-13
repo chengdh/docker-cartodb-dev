@@ -182,15 +182,26 @@ RUN git clone -c submodule."private".update=none --recursive https://github.com/
     cd lib/sql && \
     PGUSER=postgres make install && \
     service postgresql start && /bin/su postgres -c \
-      /tmp/cartodb_pgsql.sh && service postgresql stop && \
-    cd - && \
+      /tmp/cartodb_pgsql.sh && service postgresql stop
+RUN cd - && \
     npm install && \
-    rm -r /tmp/npm-* /root/.npm && \
+    rm -r /tmp/npm-* /root/.npm 
+
+# RUN apt-get install -y -q python-pip 
+RUN cd /cartodb && \
     perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
-    pip install --no-binary :all: -r python_requirements.txt && \
+    CPLUS_INCLUDE_PATH=/usr/include/gdal  \
+    C_INCLUDE_PATH=/usr/include/gdal \
+    PATH=$PATH:/usr/include/gdal \
+    # pip install --no-binary :all: -r python_requirements.txt
+    pip install -r python_requirements.txt
+
+RUN cd /cartodb && \
     gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
     bundle update thin && \
-    /bin/bash -l -c 'bundle install' && \
+    /bin/bash -l -c 'bundle install'
+
+RUN cd /cartodb && \
     cp config/grunt_development.json ./config/grunt_true.json && \
     /bin/bash -l -c 'bundle exec grunt'
     # && \
