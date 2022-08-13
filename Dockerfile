@@ -159,21 +159,23 @@ RUN service postgresql start && /bin/su postgres -c \
 ADD ./cartodb_pgsql.sh /tmp/cartodb_pgsql.sh
 
 # Install CartoDB API
-RUN git clone git://github.com/CartoDB/CartoDB-SQL-API.git && \
+RUN git clone https://github.com/CartoDB/CartoDB-SQL-API.git && \
     cd CartoDB-SQL-API && \
     git checkout $SQLAPI_VERSION && \
     npm install && \
     mkdir logs
 
 # Install Windshaft
-RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
+RUN git clone https://github.com/CartoDB/Windshaft-cartodb.git && \
     cd Windshaft-cartodb && \
     git checkout $WINDSHAFT_VERSION && \
     npm install && \
     mkdir logs
 
+RUN git config --global url.https://github.com/.insteadOf git@github.com:
+
 # Install CartoDB
-RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
+RUN git clone -c submodule."private".update=none --recursive https://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
     git checkout $CARTODB_VERSION && \
     # Install cartodb extension
