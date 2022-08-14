@@ -3,6 +3,12 @@ services:
   cartodb-editor:
     container_name: cartodb-editor
     build: .
+    environment:
+    - CARTO_HOSTNAME=cartodb.localhost
     ports:
-      - 8090:80
+      - 8090:8090
+    volumes:
+      - ./config/cartodb.nginx.proxy.conf:/etc/nginx/nginx.conf
+      - ./config/app_config.yml:/cartodb/config/app_config.yml
+      - ./config/database.yml:/cartodb/config/database.yml
      

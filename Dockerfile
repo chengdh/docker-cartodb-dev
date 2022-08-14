@@ -127,7 +127,8 @@ RUN cd /opt && \
     rm -rf varnish-3.0.7 varnish-3.0.7.tgz
 
 # Install NodeJS
-RUN curl https://nodejs.org/dist/v10.15.3/node-v10.15.3-linux-x64.tar.xz |tar -Jxf - --strip-components=1 -C /usr && \
+# RUN curl https://nodejs.org/dist/v10.15.3/node-v10.15.3-linux-x64.tar.xz |tar -Jxf - --strip-components=1 -C /usr && \
+RUN curl https://nodejs.org/dist/v12.16.3/node-v12.16.3-linux-x64.tar.xz |tar -Jxf - --strip-components=1 -C /usr && \
   npm install -g grunt-cli && \
   npm install -g npm@6 && \
   rm -r /tmp/npm-* /root/.npm
