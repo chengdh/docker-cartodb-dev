@@ -203,12 +203,12 @@ RUN cd /cartodb && \
     bundle update thin && \
     /bin/bash -l -c 'bundle install'
 
-# RUN cd /cartodb && \
-#     cp config/grunt_development.json ./config/grunt_true.json && \
-#     export PATH=$PATH:$PWD/node_modules/grunt-cli/bin && \
-#     /bin/bash -l -c 'bundle exec grunt'
-#     # && \
-#     #rm -rf .git /root/.cache/pip node_modules
+RUN cd /cartodb && \
+    cp config/grunt_development.json ./config/grunt_true.json && \
+    export PATH=$PATH:$PWD/node_modules/grunt-cli/bin && \
+    /bin/bash -l -c 'bundle exec grunt'
+    # && \
+    #rm -rf .git /root/.cache/pip node_modules
 
 # Geocoder SQL client + server
 RUN git clone https://github.com/CartoDB/data-services.git && \

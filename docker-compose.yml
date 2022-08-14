@@ -6,7 +6,8 @@ services:
     environment:
     - CARTO_HOSTNAME=cartodb.localhost
     ports:
-      - 8090:8090
+      - 80:80
+      - 3000:3000
     volumes:
       - ./config/cartodb.nginx.proxy.conf:/etc/nginx/nginx.conf
       - ./config/app_config.yml:/cartodb/config/app_config.yml
