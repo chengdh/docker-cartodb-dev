@@ -185,6 +185,7 @@ RUN git clone -c submodule."private".update=none --recursive https://github.com/
       /tmp/cartodb_pgsql.sh && service postgresql stop
 RUN cd /cartodb && \
     npm install && \
+    npm run carto-node && npm run build:static && \
     rm -r /tmp/npm-* /root/.npm 
 
 # RUN apt-get install -y -q python-pip 
